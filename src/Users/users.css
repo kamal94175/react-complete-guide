@@ -1,0 +1,9 @@
+.users {
+    border: 1px solid #eee;
+    padding: 15px;
+    width: 250px;
+    margin: 10px auto;
+    height: 150px;
+    box-shadow: 2px 2px 3px #eee;
+    font-family: inherit;
+}
