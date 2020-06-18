@@ -1,44 +1,50 @@
 import React, { Component } from 'react';
 import './App.css';
-import UserInput from './Users/UserInput.js';
-import UserOutput from './Users/UserOutput.js';
-class App extends Component {
+import Char from './Users/Char.js';
+import Validation from './Users/Validation.js';
 
+class App extends Component {
     state = {
-        userName: 'Kamal'
+        input: ''
     }
 
-
-
-    nameChangeHandler = (event) => {
+    inputChangeHandler = (event) => {
         this.setState({
-            userName: event.target.value,
+            input: event.target.value,
 
         })
     }
-    render() {
-        const style = {
-             border: '1px solid #eee',
-             padding: '15px',
-             width: '1000px',
-             margin: '10px auto',
-             height: 'auto',
-             boxshadow: '2px 2px 3px #eee',
-             fontfamily: 'inherit'
+    deleteHandler = (index) => {
+        let splitText = this.state.input.split('');
+        splitText.splice(index, 1);
+        let joinText = splitText.join('');
+        this.setState ({
+            input: joinText
+        });
     }
-        
+    render() {
+        const charValue = this.state.input.split('').map((char, index) => {
+            return <Char value={char}
+                key={index}
+                delete={() => this.deleteHandler(index)} />;
+            
+        });
         return (
-            <div style={style} className="App">
-                <h1>Hi! I am a React developer.</h1>
+            <div className="center">
+                <input type='text'
+                       onChange={this.inputChangeHandler}
+                       value={this.state.input}
+                />
+                <p>{this.state.input}</p>
 
-                <UserOutput Name={this.state.userName} />
-                
-                <UserOutput Name={this.state.userName}>Hello there!
-                </UserOutput>
-                <UserInput Name={this.state.userName} change={this.nameChangeHandler} />
-                
+                <Validation inputLength={this.state.input.length} />
+                {charValue}
+
             </div>
         );
+        
+        
+        
     }
 }
 
